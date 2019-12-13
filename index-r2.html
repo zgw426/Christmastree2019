@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html class="h-100">
+  <head>
+    <meta charset="UTF-8" />
+    <title>クリスマス</title>
+    <!-- A-Frame -->
+    <!-- <script src="https://aframe.io/releases/0.9.2/aframe.min.js"></script> カメラが動かない-->
+    <script src="https://aframe.io/releases/0.8.0/aframe.min.js"></script>
+    <!-- A-Frame -->
+
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" type="text/css" href="/css/auth0-theme.min.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link
+      rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/monokai-sublime.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.7.2/css/solid.css"
+      integrity="sha384-r/k8YTFqmlOaqRkZuSiE9trsrDXkh07mRaoGBMoDcmA58OHILZPsk29i2BsFng1B"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.7.2/css/fontawesome.css"
+      integrity="sha384-4aon80D8rXCGx9ayDt85LbyUHeMWd3UiBaWliBlJ53yzm9hqN21A+o1pqoyK04h+"
+      crossorigin="anonymous"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.auth0.com/js/auth0-samples-theme/1.0/css/auth0-theme.min.css"
+    />
+  </head>
+
+  <body class="h-100">
+    <div id="app" class="h-100 d-flex flex-column">
+      <div class="nav-container">
+        <nav class="navbar navbar-expand-md navbar-light bg-light">
+          <div class="container">
+            <div class="navbar-brand logo"></div>
+            <button
+              class="navbar-toggler"
+              type="button"
+              data-toggle="collapse"
+              data-target="#navbarNav"
+              aria-controls="navbarNav"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                  <a href="/" class="nav-link route-link">Home</a>
+                </li>
+              </ul>
+              <ul class="navbar-nav d-none d-md-block">
+                <!-- Login button: show if NOT authenticated -->
+                <li class="nav-item auth-invisible">
+                  <button
+                    id="qsLoginBtn"
+                    onclick="login()"
+                    class="btn btn-primary btn-margin auth-invisible hidden"
+                  >
+                    Log in
+                  </button>
+                </li>
+                <!-- / Login button -->
+
+                <!-- Fullsize dropdown: show if authenticated -->
+                <li class="nav-item dropdown auth-visible hidden">
+                  <a
+                    class="nav-link dropdown-toggle"
+                    href="#"
+                    id="profileDropDown"
+                    data-toggle="dropdown"
+                  >
+                    <!-- Profile image should be set to the profile picture from the id token -->
+                    <img
+                      alt="Profile picture"
+                      class="nav-user-profile profile-image rounded-circle"
+                      width="50"
+                    />
+                  </a>
+                  <div class="dropdown-menu">
+                    <!-- Show the user's full name from the id token here -->
+                    <div class="dropdown-header nav-user-name user-name"></div>
+                    <a
+                      href="/profile"
+                      class="dropdown-item dropdown-profile route-link"
+                    >
+                      <i class="fas fa-user mr-3"></i> Profile
+                    </a>
+                    <a
+                      href="#"
+                      class="dropdown-item"
+                      id="qsLogoutBtn"
+                      onclick="logout()"
+                    >
+                      <i class="fas fa-power-off mr-3"></i> Log out
+                    </a>
+                  </div>
+                </li>
+                <!-- /Fullsize dropdown -->
+              </ul>
+
+              <!-- Responsive login button: show if NOT authenticated -->
+              <ul class="navbar-nav d-md-none auth-invisible">
+                <button
+                  class="btn btn-primary btn-block auth-invisible hidden"
+                  id="qsLoginBtn"
+                  onclick="login()"
+                >
+                  Log in
+                </button>
+              </ul>
+              <!-- /Responsive login button -->
+
+              <!-- Responsive profile dropdown: show if authenticated -->
+              <ul
+                class="navbar-nav d-md-none auth-visible hidden justify-content-between"
+                style="min-height: 125px"
+              >
+                <li class="nav-item">
+                  <span class="user-info">
+                    <!-- Profile image should be set to the profile picture from the id token -->
+                    <img
+                      alt="Profile picture"
+                      class="nav-user-profile d-inline-block profile-image rounded-circle mr-3 rounded-top.rounded-left"
+                      .rounded-bottom.rounded-left
+                      width="50"
+                    />
+                    <!-- Show the user's full name from the id token here -->
+                    <h6 class="d-inline-block nav-user-name user-name"></h6>
+                  </span>
+                </li>
+                <li>
+                  <i class="fas fa-user mr-3"></i>
+                  <a href="/profile" class="route-link">Profile</a>
+                </li>
+
+                <li>
+                  <i class="fas fa-power-off mr-3"></i>
+                  <a href="#" id="qsLogoutBtn" onclick="logout()">Log out</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </div>
+
+      <div id="main-content" class="container mt-5 flex-grow-1">
+        <div id="content-home" class="page">
+          <div class="text-center hero">
+            <img
+              class="mb-3 app-logo"
+              src="/images/tree.png"
+              alt="クリスマスツリー"
+              width="75"
+            />
+            <h1 class="mb-4">クリスマスカード</h1>
+
+            <p class="lead">
+              Merry Christmas
+            </p>
+          </div>
+
+          <div class="next-steps">
+            <h2 class="my-5 text-center">What can I do next?</h2>
+
+            <div class="row">
+              <div class="col-md-5 mb-4">
+                <h6 class="mb-3">
+                  <a href="https://auth0.com/docs/connections">
+                    <i class="fas fa-link"></i> Configure other identity
+                    providers
+                  </a>
+                </h6>
+                <p>
+                  Auth0 supports social providers as Facebook, Twitter,
+                  Instagram and 100+, Enterprise providers as Microsoft Office
+                  365, Google Apps, Azure, and more. You can also use any OAuth2
+                  Authorization Server.
+                </p>
+              </div>
+              <div class="col-md"></div>
+              <div class="col-md-5 mb-4">
+                <h6 class="mb-3">
+                  <a href="https://auth0.com/docs/multifactor-authentication">
+                    <i class="fas fa-link"></i> Enable Multifactor
+                    Authentication
+                  </a>
+                </h6>
+                <p>
+                  Add an extra layer of security by enabling Multi-factor
+                  Authentication, requiring your users to provide more than one
+                  piece of identifying information. Push notifications,
+                  authenticator apps, SMS, and DUO Security are supported.
+                </p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-5 mb-4">
+                <h6 class="mb-3">
+                  <a href="https://auth0.com/docs/anomaly-detection">
+                    <i class="fas fa-link"></i> Anomaly Detection
+                  </a>
+                </h6>
+                <p>
+                  Auth0 can detect anomalies and stop malicious attempts to
+                  access your application. Anomaly detection can alert you and
+                  your users of suspicious activity, as well as block further
+                  login attempts.
+                </p>
+              </div>
+
+              <div class="col-md"></div>
+              <div class="col-md-5 mb-4">
+                <h6 class="mb-3">
+                  <a href="https://auth0.com/docs/rules">
+                    <i class="fas fa-link"></i> Learn About Rules
+                  </a>
+                </h6>
+                <p>
+                  Rules are JavaScript functions that execute when a user
+                  authenticates to your application. They run once the
+                  authentication process is complete, and you can use them to
+                  customize and extend Auth0's capabilities.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="page" id="content-profile">
+          <div class="container">
+            <div class="row align-items-center profile-header">
+              <div class="col-md-2">
+                <img
+                  alt="User's profile picture"
+                  class="rounded-circle img-fluid profile-image mb-3 mb-md-0"
+                />
+              </div>
+              <div class="col-md">
+                <h2 class="user-name" id="usernameTag2"></h2>
+                <div  id="usernameTag" class="user-name">tteesstt--</div>
+                <!-- p class="lead text-muted user-email"></p -->
+              </div>
+
+    <!-- ***********************************************************
+      A-Frame Christmas Tree 
+    *********************************************************** -->
+
+    <a-scene id="viewport"
+            data-range="60 8 60">
+    <a-entity>
+      <a-animation attribute="rotation"
+                  from="0 0 0" to="0 360 0"
+                  dur="72000" easing="linear"
+                  repeat="indefinite"
+                  >    
+      </a-animation>  
+
+
+    <a-plane id="ground"
+    rotation="-90 0 0"
+    width="200" height="200"
+    material="shader: flat; color: #f0f0f0"
+    >
+    </a-plane>
+
+    <a-sky id="sky" color="#040d1a"></a-sky>  
+
+    <a-entity id="tree_christmas" scale="4 4 4">
+      <a-animation attribute="rotation"
+                  from="0 360 0" to="0 0 0"
+                  dur="72000" easing="linear"
+                  repeat="indefinite"
+                  >    
+      </a-animation>
+    <a-entity id="tree_xmas_parts"
+    position="0 1 0">
+
+    <a-entity id="xmas_parts1">
+    <a-box material="color:#4cca10" geometry="" position="-0.04 1.374 -0.284" scale="1 0.793 1"></a-box><a-box material="color:#4cca10" position="0.044 0.844 0.53" scale="1 0.43 1"></a-box><a-box material="color:#4cca10" position="-0.876 0.932 -0.275" scale="1.172 0.556 1" geometry=""></a-box><a-box material="color:#4cca10" position="-1.278 0.527 -0.275" scale="1.172 0.556 1"></a-box><a-box material="color:#4cca10" position="1.016 1.023 0" scale="1.063 0.59 1" geometry=""></a-box><a-box material="color:#4cca10" position="0.361 0.361 -0.47" scale="1.561 0.491 1"></a-box><a-box material="color:#4cca10" position="0.085 0.841 -0.977" scale="1.561 0.575 1"></a-box>
+    <a-box id="node1" material="color:#a44523"></a-box>
+    </a-entity>
+
+    <a-entity id="xmas_parts2" position="-0.456 1.709 -0.266" rotation="0 -156.704 0">
+        <a-box material="color:#4cca10" position="-0.216 1.161 -0.359" scale="1 0.618 0.773"></a-box><a-box material="color:#4cca10" position="0.044 0.844 0.53" scale="1 0.43 1"></a-box><a-box material="color:#4cca10" position="-0.876 0.675 -0.275" scale="1.172 0.556 1"></a-box><a-box material="color:#4cca10" position="-1.064 0.527 -0.722" scale="1.172 0.556 1" geometry=""></a-box><a-box material="color:#4cca10" position="-0.031 0.205 -0.686" scale="1.172 0.556 1" rotation="0 -39.99245410013146 0"></a-box><a-box material="color:#4cca10" position="0.697 1.023 -0.137" scale="1.063 0.59 1"></a-box><a-box material="color:#4cca10" position="0.6 0.361 0.6" scale="1.231 0.491 1" rotation="0 -40.90918657234078 0"></a-box><a-box material="color:#4cca10" position="0.761 0.406 -0.435" scale="1.231 0.491 1"></a-box><a-box material="color:#4cca10" position="0.451 -0.396 -0.942" scale="1.231 0.491 1"></a-box><a-box material="color:#4cca10" position="-0.579 1.237 0.567" scale="0.894 0.329 0.573"></a-box>
+        <a-box id="node2" material="color:#a44523" position="-0.181 0 -0.28" rotation="0 -13.349916626548183 0" scale="0.912 1.313 1"></a-box>
+    </a-entity>
+
+        <a-entity id="xmas_parts3" position="-0.456 3.408 -0.345" rotation="0 -172.575 0">
+            <a-box material="color:#4cca10" position="-0.26 1.374 -0.278" scale="0.613 0.631 0.432" geometry=""></a-box><a-box material="color:#4cca10" position="0.223 1.023 -0.532" scale="0.613 0.631 0.432"></a-box><a-box material="color:#4cca10" position="0.319 0.844 0.168" scale="0.656 0.43 0.514" rotation="0 -29.621918008263563 0"></a-box><a-box material="color:#4cca10" position="-0.224 0.932 -0.029" scale="0.761 0.556 0.609" rotation="0 -21.772396214971284 0" geometry=""></a-box><a-box material="color:#4cca10" position="-0.462 0.932 -0.665" scale="0.616 0.456 0.609" rotation="0 -124.15995420484938 0"></a-box><a-box material="color:#4cca10" position="-0.905 0.527 -0.555" scale="0.897 0.556 0.665" geometry=""></a-box><a-box material="color:#4cca10" position="-0.456 0.209 0.013" scale="0.897 0.43 0.665"></a-box><a-box material="color:#4cca10" position="0.382 0.722 -0.373" scale="1.063 0.411 0.719"></a-box><a-box material="color:#4cca10" position="0.775 0.376 -0.34" scale="0.897 0.381 0.517" geometry=""></a-box><a-box material="color:#4cca10" position="0.413 -0.004 0.14" scale="0.73 0.381 0.866" rotation="0 -45.664736271926614 0"></a-box><a-box material="color:#4cca10" position="0.403 0.227 -0.787" scale="0.897 0.381 0.517" rotation="0 31.168904055116787 0"></a-box><a-box material="color:#4cca10" position="-0.319 0.227 -0.881" scale="0.897 0.381 0.517" rotation="0 131.89488443911551 0"></a-box><a-box material="color:#4cca10" position="-0.345 0.841 0.233" scale="0.712 0.329 0.86"></a-box>
+            <a-box id="node3" material="color:#a44523" position="-0.181 -0.062 -0.317" scale="0.596 1.472 0.455"></a-box>
+        </a-entity>
+
+        <a-entity id="xmas_parts4" position="-0.031 4.738 -0.294" rotation="0 90 0" scale="0.808 0.808 0.808">
+            <a-box material="color:#4cca10" position="-0.098 1.374 -0.278" scale="0.613 0.631 0.432"></a-box><a-box material="color:#4cca10" position="0.223 1.023 -0.532" scale="0.613 0.631 0.432"></a-box><a-box material="color:#4cca10" position="0.319 0.844 0.168" scale="0.656 0.43 0.514" rotation="0 -29.621918008263563 0"></a-box><a-box material="color:#4cca10" position="-0.224 0.932 -0.029" scale="0.761 0.556 0.609" rotation="0 -21.772396214971284 0"></a-box><a-box material="color:#4cca10" position="-0.462 0.932 -0.665" scale="0.616 0.456 0.609" rotation="0 -124.15995420484938 0"></a-box><a-box material="color:#4cca10" position="-0.68 0.527 -0.555" scale="0.897 0.556 0.665"></a-box><a-box material="color:#4cca10" position="-0.456 0.209 0.013" scale="0.897 0.43 0.665"></a-box><a-box material="color:#4cca10" position="0.382 0.722 -0.373" scale="1.063 0.411 0.719"></a-box><a-box material="color:#4cca10" position="0.775 0.376 -0.34" scale="0.897 0.381 0.517"></a-box><a-box material="color:#4cca10" position="0.413 -0.004 0.14" scale="0.73 0.381 0.866" rotation="0 -45.664736271926614 0"></a-box><a-box material="color:#4cca10" position="0.403 0.227 -0.787" scale="0.897 0.381 0.517" rotation="0 31.168904055116787 0"></a-box><a-box material="color:#4cca10" position="-0.319 0.227 -0.881" scale="0.897 0.381 0.517" rotation="0 131.89488443911551 0"></a-box><a-box material="color:#4cca10" position="-0.345 0.841 0.233" scale="0.712 0.329 0.86"></a-box>
+                <a-box id="node4" material="color:#a44523" position="-0.181 -0.062 -0.317" scale="0.596 1.472 0.455"></a-box>
+            </a-entity>
+    </a-entity>
+
+    <!-- tree light top -->
+    <a-entity id="tree_light_top">
+        <a-entity position="-0.234 7.48 -0.175" scale="0.378 0.378 0.378" geometry="primitive:octahedron" material="emissive:#c90;color:#fff"></a-entity>
+
+    </a-entity>
+
+    <!-- tree blinks -->
+    <a-entity id="tree_blinks">
+            <a-entity id="tree_blink" position="-1.123 3.604 0.827" light="color:#F00;type:point">
+                <a-animation attribute="light.intensity" from="0.5" to="1.5" dur="2000" delay="0" direction="alternate" repeat="indefinite"></a-animation>
+            </a-entity>
+
+            <a-entity id="tree_blink-2" position="-0.263 5.522 1" light="color:#00f;intensity:3;groundColor:#fff;type:point">
+                <a-animation attribute="light.intensity" from="0.5" to="1.5" dur="2000" delay="200" direction="alternate" repeat="indefinite"></a-animation>
+            </a-entity>
+
+            <a-entity id="tree_blink-3" position="0.846 2.515 0.867" light="intensity:2.083;color:#ff0;groundColor:#fff;type:point">
+                <a-animation attribute="light.intensity" from="0.5" to="1.5" dur="2000" delay="400" direction="alternate" repeat="indefinite"></a-animation>
+            </a-entity>
+
+            <a-entity id="tree_blink-4" position="-0.111 3.017 -2.264" light="intensity:2;color:#ff0;groundColor:#fff;type:point">
+                <a-animation attribute="light.intensity" from="0.5" to="1.5" dur="2000" delay="800" direction="alternate" repeat="indefinite"></a-animation>
+            </a-entity>
+    </a-entity>
+
+    <!-- tree_ornaments -->
+    <a-entity id="tree_ornaments">
+            <a-entity id="tree_ornament" position="-0.188 5.978 0.589" scale="0.1 0.1 0.1" geometry="primitive:sphere" material="color:#0ff"></a-entity>
+            <a-entity id="tree_ornament-2" position="-1.046 4.315 0.717" scale="0.1 0.1 0.1" geometry="primitive:sphere" material="color:#ff0"></a-entity>
+            <a-entity id="tree_ornament-3" position="0.248 4.287 0.36" scale="0.1 0.1 0.1" geometry="primitive:sphere" material="color:#0f0"></a-entity>
+            <a-entity id="tree_ornament-4" position="0.653 2.871 0.431" scale="0.1 0.1 0.1" geometry="primitive:sphere" material="color:#0ff"></a-entity>
+            <a-entity id="tree_ornament-5" position="-0.883 2.612 1.03" scale="0.1 0.1 0.1" geometry="primitive:sphere" material="color:#f00"></a-entity><a-entity id="tree_ornament-6" position="0.783 3.137 -1.083" scale="0.1 0.1 0.1" geometry="primitive:sphere" material="color:#0ff"></a-entity><a-entity id="tree_ornament-7" position="0.18 4.207 -1.262" scale="0.1 0.1 0.1" geometry="primitive:sphere" material="color:#0f0"></a-entity><a-entity id="tree_ornament-8" position="-0.288 5.45 -0.988" scale="0.1 0.1 0.1" geometry="primitive:sphere" material="color:#f00"></a-entity><a-entity id="tree_ornament-9" position="-0.248 6.548 -0.922" scale="0.1 0.1 0.1" geometry="primitive:sphere" material="color:#ff0"></a-entity><a-entity id="tree_ornament-10" position="-1.07 2.598 -0.81" scale="0.1 0.1 0.1" geometry="primitive:sphere" material="color:#ff0"></a-entity><a-entity id="tree_ornament-11" position="-0.772 2.299 0.13" scale="0.1 0.1 0.1" geometry="primitive:sphere" material="color:#f0f"></a-entity><a-entity id="tree_ornament-12" position="-1.451 5.014 -0.048" scale="0.1 0.1 0.1" geometry="primitive:sphere" material="color:#90f"></a-entity><a-entity id="tree_ornament-13" position="-0.408 5.014 0.335" scale="0.1 0.1 0.1" geometry="primitive:sphere" material="color:#fff"></a-entity><a-entity id="tree_ornament-14" position="0.451 5.298 -0.041" scale="0.1 0.1 0.1" geometry="primitive:sphere" material="color:#0f9"></a-entity><a-entity id="tree_ornament-15" position="0.451 4.006 -0.041" scale="0.1 0.1 0.1" geometry="primitive:sphere" material="color:#ff0"></a-entity><a-entity id="tree_ornament-16" position="0.337 5.199 -0.805" scale="0.1 0.1 0.1" geometry="primitive:sphere" material="color:#f0f"></a-entity><a-entity id="tree_ornament-17" position="-0.317 6.471 0.373" scale="0.1 0.1 0.1" geometry="primitive:sphere" material="color:#fff"></a-entity>
+    </a-entity>
+    </a-entity>
+    <!-- // end of tree_christmas -->
+
+    <a-entity id="snow"
+    geometry="primitive: sphere; radius: 0.4;"
+    material="shader: flat; color: #fff;"
+    position="0 -10 0"
+    ></a-entity>
+
+    <a-entity id="building"
+    geometry="primitive: box; width: 4; height: 8; depth: 4;"
+    material="shader: flat"
+    position="0 -10 0"
+    >
+    </a-entity>
+
+    <a-entity id="camera_container"
+    position="0 8 20" rotation="10 0 0"
+    data-lookat="0 0 0"
+    >
+        <a-camera id="camera_body"
+        far="6000"
+        look-controls-enabled="true"
+        wasd-controls-enabled="false"
+        ></a-camera>
+    </a-entity>
+    </a-entity>
+    </a-scene>
+    <script>
+    const settings = {
+      building: 60,
+      snow: 30
+    };
+    document.addEventListener('DOMContentLoaded', e => {
+      setTimeout(app, 100);
+    });
+
+    const app = () => {
+      const viewport = document.getElementById('viewport');
+      const snow = document.getElementById('snow');
+      const building = document.getElementById('building');
+      const buildings = Array(settings.building).fill(null).map(() => new Building(building, viewport));
+      const snowGroup = Array(settings.snow).fill(null).map(() => new Snow(snow, viewport));
+      //Camera.init();
+      const update = () => {
+        snowGroup.forEach(snow => snow.update());
+        // Camera.update();
+        window.requestAnimationFrame(update);
+      }
+      update();
+    };
+    const Utils = {
+      getRandom: (min = 1, max) => {
+        if(max == null) {
+          return Math.random() * min;
+        } else {
+          return Math.random() * (Math.abs(min) + Math.abs(max)) + min;
+        }
+      },
+      getCentralizedValue: (value = 0, length = 1, exclude = 0) => {
+        value = value - length / 2;
+        if(Math.abs(value) < exclude){
+          value += exclude * (value < 0 ? -1 : 1);
+        }
+        return value;
+      },
+      getViewportRange(viewport){
+        let range = '80 12 80';
+        if(viewport != null){
+          range = viewport.getAttribute('data-range') || range;
+        }
+        return new THREE.Vector3(...range.split(' '));
+      },
+      getVectorValueWithRange(range, expand, exclude){
+        const { getRandom: r, getCentralizedValue: c } = Utils;
+        expand = new THREE.Vector3(...expand.split(' '));
+        exclude = new THREE.Vector3(...exclude.split(' '));
+        const getValue = () => {
+          const x = c(r(range.x * expand.x), range.x * (expand.x < 1 ? 1 : expand.x));
+          const z = c(r(range.z * expand.z), range.z * (expand.z < 1 ? 1 : expand.z));
+          const y = 0;
+          return [ x, y, z ];
+        }
+        let value;
+      let count = 0;
+        while(true){
+          value = new THREE.Vector3(...getValue());
+          if((Math.abs(value.x) > exclude.x || Math.abs(value.z) > exclude.z) || count > 10){
+            break;
+          }
+        }
+        return value;
+      }
+    };
+
+    const Camera = {
+      init(){
+        this.container = document.getElementById('camera_container');
+        this.body = document.getElementById('camera_body');
+        this.position = this.container.getAttribute('position');
+        this.positionDefault = { ...this.position };
+        this.rotation = this.container.getAttribute('rotation');
+        this.lookat = this.container.getAttribute('data-lookat') || '0 2 0';
+        this.lookat = new THREE.Vector3(...this.lookat.split(' '));
+        this.theta = 0;
+      },
+      update() {
+        const { position, positionDefault:pdef, rotation, lookat, theta } = this;
+        position.x = Math.sin(theta * Math.PI / 180) * pdef.z;
+        position.y = Math.sin(theta * 4 * Math.PI / 180) + pdef.y;
+        position.z = Math.cos(theta * Math.PI / 180) * pdef.z;
+        rotation.x = Math.atan2(lookat.y, position.y) / Math.PI * 180;
+        rotation.y = theta;
+        this.theta = (theta + 0.1) % 360;
+        this.container.setAttribute('position', position);
+        this.container.setAttribute('rotation', rotation);
+      }
+    };
+
+    class SpawnObject {
+      constructor(original, viewport){
+        this.shape = original.cloneNode();
+        this.viewport = viewport;
+        this.range = Utils.getViewportRange(viewport);
+        this.viewport.appendChild(this.shape);
+        this.shape.setAttribute('shadow', 'receive: false')
+        this.setup();
+      }
+      setup(options = {
+        excludeRange: '0 0 0',
+        expandRange: '1 1 1'
+      }){
+        const { expandRange, excludeRange } = options;
+        this.enabled = true;
+        this.position = Utils.getVectorValueWithRange(this.range, expandRange, excludeRange);
+        this.rotation = new THREE.Vector3(0, 0, 0);
+        this.scale = new THREE.Vector3(1, 1, 1);
+        this.acceleration = new THREE.Vector3(0, 0, 0);
+      }
+      update(){
+        if(!this.enabled){ return; }
+        const velocity = this.acceleration;
+        const position = this.position.add(velocity);
+
+        this.render();
+      }
+      render() {
+        this.shape.setAttribute('position', this.position)
+        this.shape.setAttribute('rotation',this.rotation);
+        this.shape.setAttribute('scale', this.scale)
+      }
+      destroy() {
+        this.enabled = false;
+      }
+    }
+
+    class Building extends SpawnObject {
+      setup(){
+        super.setup({
+          excludeRange: '50 0 50',
+          expandRange: '2 0 2',
+        });
+        const { getRandom: r } = Utils;
+        this.scale = new THREE.Vector3(r(2, 2.8), r(1, 2.4), r(2, 2.8));
+        this.position.y = this.scale.y;
+
+        const { x, y, z } = this.position;
+        let color = Math.round(250 - (Math.abs(z) * 0.8 + Math.abs(x) * 0.8));
+        color = (color <= 64 ? 64 : color).toString(16);
+        this.shape.setAttribute('material', `shader: flat; color: #${color + color + color}`);
+        this.update();
+      }
+    }
+
+    class Snow extends SpawnObject {
+      setup(){
+        super.setup();
+        const { getRandom: r, getCentralizedValue: c } = Utils;
+        const scale = r(0.5, 2);
+        this.status = 'active';
+        this.position.y = r(this.range.y, this.range.y + 4);
+        this.scale = new THREE.Vector3(scale, scale, scale);
+        this.acceleration = new THREE.Vector3(
+          c(r(0.01), 0.01), -r(0.01, 0.02), c(r(0.01), 0.01));
+        this.acceleration.multiply(new THREE.Vector3(10, 8, 10));
+      }
+      update(){
+        super.update();
+        if(this.status !== 'active') { return; }
+        if(this.position.y <= this.scale.y / 2){
+          this.destroy(Math.random() * 1000 + 1000)
+        }
+      }
+      destroy(delay){
+        //super.destroy();
+        this.status = 'will_destroy';
+        this.acceleration.multiply(new THREE.Vector3(0.8, 0.25, 0.8));
+        setTimeout(() => {
+          this.setup();
+        }, delay); 
+      }
+    }
+
+////////////////////////////////////////////////////////////////////--
+
+//var nameStr = "";
+//nameStr += document.getElementById("usernameTag").innerText;
+//nameStr += "aa-bb";
+
+
+var scene = document.querySelector('a-scene');
+var cylinder = document.createElement('a-text');
+cylinder.setAttribute('color', '#FF9500');
+cylinder.setAttribute('value', "dummy");
+cylinder.setAttribute('position', { x: 50, y: 20, z: 30 });
+cylinder.setAttribute('width', '50');
+
+scene.appendChild(cylinder);
+var t = 0;
+function render() {
+  t += 0.01;
+  requestAnimationFrame(render);
+  cylinder.setAttribute('position', '3 '+(Math.sin(t*2)+10)+' 0');
+  var nameStr = "";
+  nameStr += document.getElementById("usernameTag").innerText;
+  nameStr += "\n Merry Christmas";
+  cylinder.setAttribute('value', nameStr);
+}
+render();
+
+
+
+
+///////////////////////////////////////////////////////////////////--
+
+
+
+
+    </script>
+
+    <!-- ***********************************************************
+      A-Frame Christmas Tree 
+    *********************************************************** -->
+
+            </div>
+            <div class="row">
+              <pre class="rounded">
+                <code id="profile-data" class="json"></code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer class="bg-light text-center p-5">
+        <div class="logo"></div>
+        <p>
+          Sample project provided by
+          <a href="https://auth0.com">Auth0</a>
+        </p>
+      </footer>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+    <script src="js/auth0-theme.min.js"></script>
+    <script src="https://cdn.auth0.com/js/auth0-spa-js/1.2/auth0-spa-js.production.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>
